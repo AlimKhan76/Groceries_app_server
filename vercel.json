@@ -16,8 +16,8 @@
       "dest": "index.js"
     },
     {
-      "src": "/products/(.*)",
-      "dest": "public/product/**"
+      "src": "/product/(?<product>.png)",
+      "dest": "public/product/$product.png"
     }
   ]
 }
