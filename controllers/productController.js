@@ -29,15 +29,33 @@ exports.getBestSellingProducts = asyncHandler(async (req, res) => {
     return res.status(200).json(bestSellingProducts)
 })
 
+const removeFromFavouriteProducts = asyncHandler(async (product, userId) => {
+    const removeFavourite = await User.findByIdAndUpdate(userId,
+        { $pull: { favourite: { $in: [product] } } }
+        , { new: true })
+    return `Removed ${product?.title} from favourite`
+})
 
-exports.addToFavouriteProducts = asyncHandler(async (req, res) => {
-    console.log(req.body)
+
+exports.changeFavouriteProducts = asyncHandler(async (req, res) => {
     const { product, userId } = req.body
-    const addToFavourite = await User.findByIdAndUpdate(userId, {
-        favourite: product
+    const existingInFavourite = await User.findOne({
+        _id: userId,
+        favourite: { $elemMatch: { $eq: product } }
     })
+
+    if (existingInFavourite !== null) {
+        const data = await removeFromFavouriteProducts(product, userId)
+        console.log(data)
+        return res.status(200).json(data)
+    }
+    else {
+        const addedToFavourite = await User.findByIdAndUpdate(userId,
+            { $push: { favourite: product } }
+            , { new: true, })
+
+        return res.status(200).json(`Added ${product?.title} to Favourite`)
+    }
+
 })
 
-exports.removeFromFavouriteProducts = asyncHandler(async (req, res) => {
-
-})

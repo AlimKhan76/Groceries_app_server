@@ -16,9 +16,9 @@ exports.loginUser = asyncHandler(async (req, res) => {
     console.log("User logged in successfully")
 
     const secret = "Groceries"
-    const token = jwt.sign({ existingUser }, secret)
+    const token = jwt.sign({ userId: existingUser._id }, secret)
     console.log(token)
-    return res.status(200).json(token)
+    return res.status(200).json({ token, role: existingUser?.role })
 })
 
 exports.registerUser = asyncHandler(async (req, res) => {
@@ -45,6 +45,10 @@ exports.registerUser = asyncHandler(async (req, res) => {
 
 
 exports.getUserInfo = asyncHandler(async (req, res) => {
-    const { token } = req.body
-
+    console.log(req.body)
+    const { userId } = req.body
+    const userInfo = await User.findById(userId,
+        { role: 0, password: 0, cart: 0, orders: 0, address: 0 })
+    if (!userInfo) throw new AppError(500, "No User data found")
+    return res.status(200).json(userInfo)
 })
