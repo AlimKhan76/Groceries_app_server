@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 mongoose
     .connect("mongodb+srv://coder34521:Ru3eOcZc9RMhYCI0@cluster0.pq9euua.mongodb.net/Groceries")
     .then(() => {
-        app.listen(3000, () => {
+        app.listen(5000, () => {
 
 
             console.log("Connected to Mongo ");
