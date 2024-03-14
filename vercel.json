@@ -16,8 +16,8 @@
       "dest": "index.js"
     },
     {
-      "src": "/static/<product>",
-      "dest": "productImage/$product"
+      "src": "/(.+\\.[a-z]+)$",
+      "dest": "public/$1"
     }
   ]
 }
