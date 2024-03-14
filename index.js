@@ -32,7 +32,6 @@ mongoose
 
 app.use("/user", userRoutes);
 app.use("/product", express.static("./public/product"))
-app.use("/orders", express.static("./orders.csv"))
 
 app.use("/product", productRoutes)
 app.use("/cart", cartRoutes)
