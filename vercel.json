@@ -14,10 +14,6 @@
     {
       "src": "/(.*)",
       "dest": "index.js"
-    },
-    {
-      "src": "/product/(?<product>.png)",
-      "dest": "public/product/$product.png"
     }
   ]
 }

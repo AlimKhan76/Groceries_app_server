@@ -31,7 +31,7 @@ mongoose
     });
 
 app.use("/user", userRoutes);
-app.use("/product", express.static("./public/product"))
+app.use("/productImage", express.static("./public/product"))
 
 app.use("/product", productRoutes)
 app.use("/cart", cartRoutes)
@@ -44,4 +44,4 @@ app.use(errorHandler);
 
 
 
-module.exports= app
+module.exports = app
