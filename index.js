@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
+const server = require('http').createServer(app);
 const userRoutes = require("./routes/userRoutes")
 const productRoutes = require("./routes/productRoutes")
 const cartRoutes = require("./routes/cartRoutes")
@@ -20,7 +21,7 @@ app.get("/", (req, res) => {
 mongoose
     .connect("mongodb+srv://coder34521:Ru3eOcZc9RMhYCI0@cluster0.pq9euua.mongodb.net/Groceries")
     .then(() => {
-        app.listen(3000, () => {
+        server.listen(3000, () => {
 
 
             console.log("Connected to Mongo ");
