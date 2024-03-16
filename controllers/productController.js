@@ -59,3 +59,12 @@ exports.changeFavouriteProducts = asyncHandler(async (req, res) => {
 
 })
 
+exports.getProductByCategory = asyncHandler(async (req, res) => {
+    console.log("sddfgsfhgjh")
+    console.log(req.params)
+    const { category } = req.params
+    const productsOfCategory = await Product.find({ category: category })
+
+    return res.status(200).json(productsOfCategory)
+
+})
