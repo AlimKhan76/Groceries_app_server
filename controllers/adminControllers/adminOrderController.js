@@ -39,6 +39,7 @@ exports.downloadPendingOrder = asyncHandler(async (req, res) => {
                 $group: {
                     _id: "$items.title",
                     totalQuantity: { $sum: "$items.quantity" },
+                    // totalQuantity: { $toString: { $sum: "$items.quantity" } },
                     unit: { $first: "$items.unit" },
                 }
             },
@@ -46,8 +47,7 @@ exports.downloadPendingOrder = asyncHandler(async (req, res) => {
                 $project: {
                     _id: 0,
                     Product: "$_id",
-                    TotalQuantity: "$totalQuantity",
-                    Unit: "$unit",
+                    Quantity: { $concat: [{ $toString: "$totalQuantity" }, " ", "$unit"] }
                 }
             }
         ])
@@ -56,7 +56,20 @@ exports.downloadPendingOrder = asyncHandler(async (req, res) => {
     const json2csv = new Parser({});
     const csv = json2csv.parse(pendingOrders);
 
+    // const updateToProcessedProduct=()
+
     return res.attachment('orders.csv').send(csv);
 
+
+})
+
+exports.updateStatusOfProduct = asyncHandler(async (req, res) => {
+    console.log(req.body)
+
+    const { status, orderID } = req.body
+
+    const order = await Order.findByIdAndUpdate(orderID,{
+        // $set: { "status": "pending" }
+    })
 
 })
