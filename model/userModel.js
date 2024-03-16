@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: Order,
     }],
-    favourite: [{ type: Object, unique: true }],
+    favourite: [{ type: Object }],
     cart: [{ type: Object, ref: Product }]
     // cart: [{ type: mongoose.Schema.Types.ObjectId, ref: Product, unique: true }]
 
