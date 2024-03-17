@@ -5,13 +5,13 @@ const AppError = require('../utils/AppError')
 
 exports.placeOrder = asyncHandler(async (req, res) => {
     console.log(req.body)
-    const { address, name, items, totalPrice, userId, contactNo } = req.body
+    const { address, name, items, totalPrice, userId, contactNo, subTotal, couponCode, discount } = req.body
 
 
     const placeOrder = await Order.create({
         address, customerName: name, items: items,
         customerContact: contactNo,
-        totalPrice
+        totalPrice, subTotal, couponCode, discount
     })
     if (!placeOrder) throw new AppError(400, "Order cannot be placed ")
 

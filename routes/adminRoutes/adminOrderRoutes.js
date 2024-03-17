@@ -1,7 +1,10 @@
 const express = require('express')
-const { getPendingOrders, getProcessedOrders, getPackedOrders, downloadPendingOrder } = require('../controllers/adminControllers/adminOrderController')
+const { getPendingOrders,
+    getProcessedOrders,
+    getPackedOrders,
+    downloadPendingOrder } = require("../../controllers/adminControllers/adminOrderController")
 const router = express.Router()
-const auth = require('../middlewares/authMiddleware')
+const auth = require('../../middlewares/authMiddleware')
 
 router.get("/getPendingOrders", auth, getPendingOrders)
 router.get("/getProcessedOrders", auth, getProcessedOrders)

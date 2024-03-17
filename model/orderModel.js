@@ -2,9 +2,6 @@ const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 const moment = require('moment-timezone');
 
-
-console.log(moment.tz("Asia/Kolkata").format("DD-MM-YYYY hh:mm A"))
-
 const orderSchema = mongoose.Schema({
     orderNo: { type: Number, unique: true },
     customerName: { type: String, required: true },
@@ -14,8 +11,12 @@ const orderSchema = mongoose.Schema({
         required: true
     }],
     status: { type: String, default: "pending", required: true },
+    subTotal: { type: Number, required: true },
+    couponCode: { type: String, default: "" },
+    discount: { type: Number, default: 0 },
     totalPrice: { type: Number, required: true },
     address: { type: Object, required: true },
+
     orderedDate: { type: String, default: moment.tz("Asia/Kolkata").format("DD-MM-YYYY hh:mm A") }
 })
 

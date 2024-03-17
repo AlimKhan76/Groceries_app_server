@@ -7,7 +7,8 @@ const cartRoutes = require("./routes/cartRoutes")
 const searchRoutes = require("./routes/searchRoutes")
 const addressRoutes = require("./routes/addressRoutes")
 const orderRoutes = require("./routes/orderRoutes")
-const adminOrderRoutes = require("./routes/adminOrderRoutes")
+const adminOrderRoutes = require("./routes/adminRoutes/adminOrderRoutes")
+const couponRoutes = require("./routes/adminRoutes/couponRoutes")
 const { errorHandler } = require('./middlewares/errorHandlingMiddleware')
 
 app.use(express.json())
@@ -39,6 +40,7 @@ app.use("/search", searchRoutes)
 app.use("/address", addressRoutes)
 app.use("/order", orderRoutes)
 app.use("/adminOrder", adminOrderRoutes)
+app.use("/coupon", couponRoutes)
 
 app.use(errorHandler);
 
