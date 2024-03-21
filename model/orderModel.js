@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 const moment = require('moment-timezone');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 
 const orderSchema = mongoose.Schema({
     orderNo: { type: Number, unique: true },
@@ -25,6 +27,9 @@ orderSchema.plugin(AutoIncrement, {
     inc_field: "orderNo",
     startAt: 1,
 })
+
+
+orderSchema.plugin(mongoosePaginate);
 
 
 const Order = mongoose.model("Order", orderSchema)

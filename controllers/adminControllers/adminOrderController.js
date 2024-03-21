@@ -3,8 +3,15 @@ const Order = require('../../model/orderModel');
 const { Parser } = require('@json2csv/plainjs');
 
 exports.getPendingOrders = asyncHandler(async (req, res) => {
-    const pendingOrders = await
-        Order.find({ status: "pending" })
+    const { pageParam } = req.params
+    console.log(req.params)
+    const pendingOrders = await Order.paginate({ status: "pending" },
+        {
+            // sort: { customerName: 1 },
+            page: pageParam,
+            limit: 5
+        })
+
 
     return res.status(200).json(pendingOrders)
 
@@ -26,7 +33,6 @@ exports.getPackedOrders = asyncHandler(async (req, res) => {
 
 
 exports.downloadPendingOrder = asyncHandler(async (req, res) => {
-    console.log("runnfdhskdh")
     const pendingOrders = await
         Order.aggregate([
             {
@@ -68,7 +74,7 @@ exports.updateStatusOfProduct = asyncHandler(async (req, res) => {
 
     const { status, orderID } = req.body
 
-    const order = await Order.findByIdAndUpdate(orderID,{
+    const order = await Order.findByIdAndUpdate(orderID, {
         // $set: { "status": "pending" }
     })
 

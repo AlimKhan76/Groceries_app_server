@@ -6,7 +6,7 @@ const { getPendingOrders,
 const router = express.Router()
 const auth = require('../../middlewares/authMiddleware')
 
-router.get("/getPendingOrders", auth, getPendingOrders)
+router.get("/getPendingOrders/:pageParam", getPendingOrders)
 router.get("/getProcessedOrders", auth, getProcessedOrders)
 router.get("/getPackedOrders", auth, getPackedOrders)
 router.get("/downloadPendingOrders", downloadPendingOrder)

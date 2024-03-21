@@ -4,7 +4,7 @@ const Product = require("../model/productModel");
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    password: { type: String, required: true, unique: true },
+    // password: { type: String, required: true, unique: true },
     contactNo: { type: String, minlength: [10, "Minimum 10 numbers are required"], required: true },
     role: { type: String, default: "customer", required: true },
     verified: { type: Boolean, default: false, required: true },

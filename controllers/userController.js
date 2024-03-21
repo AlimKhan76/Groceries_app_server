@@ -4,19 +4,35 @@ const bcrypt = require('bcrypt')
 const AppError = require('../utils/AppError')
 const jwt = require('jsonwebtoken')
 
+const signJWT_Token = (userId) => {
+    const secret = "Groceries"
+    const token = jwt.sign({ userId: userId }, secret)
+    console.log(token)
+    return token;
+}
+
 exports.loginUser = asyncHandler(async (req, res) => {
     console.log(req.body)
-    const { contactNo, password } = req.body
+    const { contactNo, password, name } = req.body
     const existingUser = await User.findOne({ contactNo })
-    if (!existingUser) throw new AppError(400, "No User found of the given contact number")
+    if (!existingUser) {
+        const createNewUser = await User.create({ contactNo: contactNo, name })
+        if (!createNewUser) throw new AppError(400, "Cannot create your account, please try again later")
 
-    const checkPassword = await bcrypt.compare(password, existingUser.password)
+        const token = signJWT_Token(createNewUser?._id)
 
-    if (!checkPassword) throw new AppError(400, "Invalid credentials !!")
+        return res.status(200).json({ token, role: createNewUser?.role })
+    }
+    console.log(existingUser)
+    // const checkPassword = await bcrypt.compare(password, existingUser.password)
+
+    // if (!checkPassword) throw new AppError(400, "Invalid credentials !!")
     console.log("User logged in successfully")
 
-    const secret = "Groceries"
-    const token = jwt.sign({ userId: existingUser._id }, secret)
+
+    const token = signJWT_Token(existingUser?._id)
+    // const secret = "Groceries"
+    // const token = jwt.sign({ userId: existingUser._id }, secret)
     console.log(token)
     return res.status(200).json({ token, role: existingUser?.role })
 })
