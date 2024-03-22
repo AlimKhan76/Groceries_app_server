@@ -7,7 +7,7 @@ exports.getPendingOrders = asyncHandler(async (req, res) => {
     console.log(req.params)
     const pendingOrders = await Order.paginate({ status: "pending" },
         {
-            // sort: { customerName: 1 },
+            sort: { orderedDate: -1 },
             page: pageParam,
             limit: 5
         })
